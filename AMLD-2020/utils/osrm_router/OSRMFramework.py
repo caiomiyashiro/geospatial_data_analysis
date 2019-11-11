@@ -18,7 +18,7 @@ class OSRMFramework():
         lat, lon, distance, duration = osm.route(lat1, lon1, lat2, lon2)
         """
         SERVICE = 'route'
-        optionals = {'geometries': 'geojson'}
+        optionals = {'geometries': 'geojson', 'annotations':'true'}
 
         long_lat1 = [lon1, lat1]
         long_lat2 = [lon2, lat2]
@@ -43,9 +43,11 @@ class OSRMFramework():
             lat = [elem[1] for elem in coordinates]
             lon = [elem[0] for elem in coordinates]
 
-            return lat, lon, distance, duration
+            osm_node_ids = main_route['legs'][0]['annotation']['nodes']
+
+            return lat, lon, distance, duration, osm_node_ids
         else:
-            return np.nan, np.nan, np.nan, np.nan
+            return np.nan, np.nan, np.nan, np.nan, np.nan
 
     def match(self, lat, lon, timestamps=None, radiuses=None):
         """
