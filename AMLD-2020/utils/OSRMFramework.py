@@ -1,5 +1,3 @@
-import requests
-import numpy as np
 import pandas as pd
 
 
@@ -16,7 +14,6 @@ class OSRMFramework():
         :example:
         lat1, lon1 = 52.506327, 13.401115
         lat2, lon2 = 52.496891, 13.385983
-
         # after setting local osrm - https://hub.docker.com/r/osrm/osrm-backend/
         osm = OSRMFramework('localhost:5000')
         lat, lon, distance, duration = osm.route(lat1, lon1, lat2, lon2)
@@ -66,7 +63,6 @@ class OSRMFramework():
                       '2019-05-31 06:05:51', '2019-05-31 06:05:56','2019-05-31 06:06:01', '2019-05-31 06:06:06','2019-05-31 06:06:11',
                       '2019-05-31 06:06:16','2019-05-31 06:06:21', '2019-05-31 06:06:26','2019-05-31 06:06:31', '2019-05-31 06:06:36']
         radiuses = [5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.]
-
         osm = OSRMFramework('localhost:5000')
         lat, lon, nodes_id = osm.match(lat, lon, timestamps, radiuses)
         """
