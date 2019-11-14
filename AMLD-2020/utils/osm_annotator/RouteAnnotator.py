@@ -1,106 +1,112 @@
-import osmnx as ox
+import requests
 import numpy as np
-import networkx as nx
+import pandas as pd
 
-from itertools import combinations
 
-class RouteAnnotator():
+import requests
+import numpy as np
+import pandas as pd
 
-    # TODO add different forms of network retrieval from OSMNx
-    def __init__(self, place, network_type):
+class OSRMFramework():
+    def __init__(self, OSRM_server_path):
+        self.server_url = OSRM_server_path
 
-        self.segment_lookup_ = None
-        self.way_lookup_ = None
-        self.G = None
+    def route(self, lat1, lon1, lat2, lon2, max_n_routes=1):
+        """
+        :example:
+        lat1, lon1 = 52.506327, 13.401115
+        lat2, lon2 = 52.496891, 13.385983
 
-        self.HIGHWAY_SPEED_LIMITS ={   # copied from https://github.com/Project-OSRM/osrm-backend/blob/master/profiles/car.lua
-            'motorway':90,
-            'motorway_link':45,
-            'trunk':85,
-            'trunk_link':40,
-            'primary':65,
-            'primary_link':30,
-            'secondary':55,
-            'secondary_link':25,
-            'tertiary':40,
-            'tertiary_link':20,
-            'unclassified':25,
-            'residential':25,
-            'living_street':10,
-            'service':15,
-            'footway': 4,    # custom
-            'path': 4,       #
-            'pedestrian': 4, #
-            'steps': 2,      #
-            'track': 4,      #
-            'piste': 4,      #
-            'corridor': 4,   #
-            'bridleway': 4,  #
-            'razed': 4,      #
-            'elevator': 0.2  #
-        }
+        # after setting local osrm - https://hub.docker.com/r/osrm/osrm-backend/
+        osm = OSRMFramework('localhost:5000')
+        lat, lon, distance, duration = osm.route(lat1, lon1, lat2, lon2)
+        """
+        SERVICE = 'route'
+        optionals = {'geometries': 'geojson', 'annotations':'true', 'overview':'full'}
 
-        self.G = ox.graph_from_place(place, network_type=network_type, simplify=False)
-        self.add_speeds()
-        self.build_lookups()
+        long_lat1 = [lon1, lat1]
+        long_lat2 = [lon2, lat2]
+        coords = [long_lat1, long_lat2]
+        coords = ';'.join([f'{lon},{lat}' for lon, lat in coords])
 
-    def add_speeds(self):
+        optionals_str = '?'
+        for k, v in optionals.items():
+            optionals_str += f'{k}={v}&'
+        optionals = optionals_str[:-1]
 
-        for u, v, k, data in self.G.edges(data=True, keys=True):
-            if 'maxspeed' in data and type(data['maxspeed']) == str and data['maxspeed'].isdigit():
-                continue
-            else:
-                if(type(data['highway']) == list): # sometimes data['highway'] comes with a list
-                    cond = [elem in self.HIGHWAY_SPEED_LIMITS for elem in data['highway']]
-                    highway_type = data['highway'][np.where(cond)[0][0]]
-                else:
-                    highway_type = data['highway']
+        query = f'http://{self.server_url}/{SERVICE}/v1/driving/{coords}{optionals}'
+        # print(f'query: {query}')
+        response = requests.get(query).json()
 
-                if(highway_type in self.HIGHWAY_SPEED_LIMITS):
-                    speed = self.HIGHWAY_SPEED_LIMITS[highway_type]
-                    data['maxspeed'] = speed
+        if(response['code'] == 'Ok'):
+            main_route = response['routes'][0]
+            coordinates = [long_lat1] + main_route['geometry']['coordinates']
+            distance = main_route['distance']
+            duration = main_route['duration']
 
-    def build_lookups(self):
-        # build segment lookup
-        segment_lookup = {}
-        way2nodes = {}
-        way_lookup = {}
+            lat = [elem[1] for elem in coordinates]
+            lon = [elem[0] for elem in coordinates]
 
-        # build segment lookup
-        for u, v, k, data in self.G.edges(data=True, keys=True):
+            osm_node_ids = main_route['legs'][0]['annotation']['nodes']
 
-            if(type(data['osmid']) != list):
-                way_ids = [data['osmid']]
-            else:
-                way_ids = data['osmid']
+            return lat, lon, distance, duration, osm_node_ids
+        else:
+            return np.nan, np.nan, np.nan, np.nan, np.nan
 
-            for way in way_ids:
-                if(way not in way2nodes.keys()):
-                    way2nodes[way] = []
-                    way_lookup[way] = data
-                way2nodes[way].extend([u,v])
+    # TODO: Interpolate timestamps in case of new nodes being created on map matching, e.g., new corner nodes
+    def match(self, lat, lon, timestamps=None, radiuses=None):
+        """
+        :example:
+        lat = [52.51156939,52.51148186,52.51102356,52.51077686,52.51063361,52.51046813,52.51030345,52.51013817,52.50997492,52.50980902,
+               52.50978678,52.50981555,52.50984412,52.50986943,52.50989677,52.50989554,52.50985494,52.50976862,52.50968128,52.50960578]
+        lon = [13.37081563, 13.37085016, 13.37053299, 13.36909533, 13.36821422, 13.36722583, 13.36624146, 13.36526077, 13.3642878, 13.36323738,
+               13.36231135, 13.36137023, 13.36044654, 13.35955068, 13.35856128, 13.35757691, 13.35658886, 13.355578  , 13.3546114 , 13.35361328]
+        timestamps = ['2019-05-31 06:04:46', '2019-05-31 06:04:56','2019-05-31 06:05:06', '2019-05-31 06:05:16','2019-05-31 06:05:21',
+                      '2019-05-31 06:05:26','2019-05-31 06:05:31', '2019-05-31 06:05:36','2019-05-31 06:05:41', '2019-05-31 06:05:46',
+                      '2019-05-31 06:05:51', '2019-05-31 06:05:56','2019-05-31 06:06:01', '2019-05-31 06:06:06','2019-05-31 06:06:11',
+                      '2019-05-31 06:06:16','2019-05-31 06:06:21', '2019-05-31 06:06:26','2019-05-31 06:06:31', '2019-05-31 06:06:36']
+        radiuses = [5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.]
 
-        nodes2way = {}
-        for key, values in way2nodes.items():
-            for pair in combinations(values,2):
-                if(pair[0] not in nodes2way.keys()):
-                    nodes2way[pair[0]] = {}
-                nodes2way[pair[0]][pair[1]] = key
+        osm = OSRMFramework('localhost:5000')
+        lat, lon, nodes_id = osm.match(lat, lon, timestamps, radiuses)
+        """
+        SERVICE = 'match'
+        optionals = {'geometries': 'geojson', 'annotations':'nodes'}
 
-        self.segment_lookup_ = nodes2way
-        self.way_lookup_ = way_lookup
+        if (timestamps is not None):
+            timestamp_unix = pd.to_datetime(timestamps, format='%Y-%M-%d %H:%m:%S').strftime('%s')
+            timestamp_unix = ';'.join(timestamp_unix)
+            optionals['timestamps'] = timestamp_unix
 
-    def segment_lookup(self, node_id_list):
-        ways_id = []
-        i = 0
-        while i < len(node_id_list) - 1:
-            ways_id.append(self.segment_lookup_[node_id_list[i]][node_id_list[i+1]])
-            i += 1
-        return ways_id
+        if (radiuses is not None):
+            # increase chance of finding correct candidate by doubling std (95% chance)
+            RADIUS_TOLERANCE_MULT = 1
+            radiuses = np.array(radiuses * RADIUS_TOLERANCE_MULT).astype(str)
+            radiuses = ';'.join(radiuses)
+            optionals['radiuses'] = radiuses
 
-    def way_lookup(self, way_id_list):
-        ways_lookup = []
-        for way in ways_id:
-            ways_lookup.append(self.way_lookup_[way])
-        return ways_lookup
-        
+        optionals_str = '?'
+        for k, v in optionals.items():
+            optionals_str += f'{k}={v}&'
+        optionals = optionals_str[:-1]  # remove last "&"
+
+        coords = [[lon_, lat_] for lon_, lat_ in zip(lon, lat)]
+        coords_str = ';'.join([f'{lon},{lat}' for lon, lat in coords])
+
+        query = f'http://{self.server_url}/{SERVICE}/v1/driving/{coords_str}{optionals}'
+
+        response = requests.get(query).json()
+        if (response['code'] == 'Ok'):
+            match_coords = response['matchings'][0]['geometry']['coordinates']
+
+            lon = [elem[0] for elem in match_coords]
+            lat = [elem[1] for elem in match_coords]
+
+            nodes = []
+            for leg in response['matchings'][0]['legs']:
+                nodes.extend(leg['annotation']['nodes'])
+            node_id_list = pd.Series(nodes).drop_duplicates(keep='first').values
+
+            return lat, lon, node_id_list
+        else:
+            raise Exception(f"Error in Mapmatching: {response['code']}")
