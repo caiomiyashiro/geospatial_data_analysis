@@ -3,6 +3,7 @@ import json
 import folium
 from shapely.geometry import LineString
 
+# TODO: Add documentation to ALL functions
 def plot_linestring(geometry, speed_color=None, config=None):
     if (type(geometry) == LineString):
         geometry = gpd.GeoSeries(geometry)

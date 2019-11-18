@@ -2,7 +2,7 @@ from shapely.geometry import LineString
 from shapely.geometry import Point
 from geopandas import GeoSeries
 
-
+# TODO: Add documentation to ALL functions
 def latlon2linestring(lat, lon):
     return GeoSeries(LineString([[lon, lat] for lat, lon in zip(lat, lon)]))
 
