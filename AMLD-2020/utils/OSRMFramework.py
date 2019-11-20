@@ -5,7 +5,6 @@ import requests
 import numpy as np
 import pandas as pd
 
-# TODO: Add documentation to ALL functions
 class OSRMFramework():
     def __init__(self, OSRM_server_path):
         self.server_url = OSRM_server_path

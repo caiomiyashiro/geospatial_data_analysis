@@ -13,7 +13,6 @@ class RouteAnnotator():
         self.node_lookup_ = None
         self.G = None
 
-        # TODO: Need adjustent. See https://wiki.openstreetmap.org/wiki/New_York
         self.HIGHWAY_SPEED_LIMITS ={   # copied from https://github.com/Project-OSRM/osrm-backend/blob/master/profiles/car.lua
             'motorway':90,
             'motorway_link':45,
