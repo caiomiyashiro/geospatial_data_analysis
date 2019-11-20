@@ -12,12 +12,35 @@ class OSRMFramework():
 
     def route(self, lat1, lon1, lat2, lon2, max_n_routes=1):
         """
-        :example:
+        Get route calculated by OSRM between two points
+
+        Provided a pick up and destination, route will call the OSRM instance,
+        perform the http call, extract the route, distance, duration and nodes
+        and return them. OSRM will return WRONG values if pick-up OR destination
+        are outside the provided OSM file and 0 if distance between pick-up
+        and dropoff are irrelevant (case by case dependend)
+
+        Parameters:
+        lat1 (float): pick-up latitude
+        lon1 (float): pick-up longitude
+        lat2 (float): dropoff latitude
+        lat2 (float): dropoff longitude
+        max_n_routes (int): number of maximum routes to return if alternatives
+        are found
+
+        Returns:
+        lat (array[float]): latitudes of the route points
+        lon (array[float]): longitude of the route points:
+        distance (int): route distance in meters
+        duration (float): route duration in seconds
+        osm_node_ids (array[int]): OSM node ids that are part of the calculated route
+
+        Example:
         lat1, lon1 = 52.506327, 13.401115
         lat2, lon2 = 52.496891, 13.385983
         # after setting local osrm - https://hub.docker.com/r/osrm/osrm-backend/
         osm = OSRMFramework('localhost:5000')
-        lat, lon, distance, duration = osm.route(lat1, lon1, lat2, lon2)
+        lat, lon, distance, duration, osm_node_ids = osm.route(lat1, lon1, lat2, lon2)
         """
         SERVICE = 'route'
         optionals = {'geometries': 'geojson', 'annotations':'true', 'overview':'full'}
@@ -54,7 +77,23 @@ class OSRMFramework():
     # TODO: Interpolate timestamps in case of new nodes being created on map matching, e.g., new corner nodes
     def match(self, lat, lon, timestamps=None, radiuses=None):
         """
-        :example:
+        Snaps GPS traces to the street thought map matching
+
+        Provided a sequence of lat/lon representing a GPS trace, match will
+        snap this segment to the street, i.e., to OSM street node ids.
+
+        Parameters:
+        lat (array[float]): sequence of latitudes
+        lon (array[float]): sequence of longitudes
+        timestamps (array[int]): UNIX timestamps associated to each GPS point
+        radiuses (array[int]): accuracy associated to each GPS point
+
+        Returns:lat, lon, node_id_list
+        lat (array[float]): latitudes of the route points
+        lon (array[float]): longitude of the route points
+        node_id_list (array[int]): list of matched OSM node ids
+
+        Example:
         lat = [52.51156939,52.51148186,52.51102356,52.51077686,52.51063361,52.51046813,52.51030345,52.51013817,52.50997492,52.50980902,
                52.50978678,52.50981555,52.50984412,52.50986943,52.50989677,52.50989554,52.50985494,52.50976862,52.50968128,52.50960578]
         lon = [13.37081563, 13.37085016, 13.37053299, 13.36909533, 13.36821422, 13.36722583, 13.36624146, 13.36526077, 13.3642878, 13.36323738,

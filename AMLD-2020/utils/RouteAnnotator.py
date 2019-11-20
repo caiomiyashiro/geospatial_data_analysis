@@ -1,13 +1,12 @@
 import osmnx as ox
 import numpy as np
 import networkx as nx
-
 from itertools import combinations
 
 class RouteAnnotator():
 
     # TODO add different forms of network retrieval from OSMNx
-    def __init__(self, place, network_type):
+    def __init__(self, place, network_type='drive_service'):
 
         self.segment_lookup_ = None
         self.way_lookup_ = None
@@ -47,6 +46,10 @@ class RouteAnnotator():
         self._build_lookups()
 
     def add_speeds(self):
+        """
+        Loops through edges and connecting nodes and extract speed limit given
+        tag or highway type. If tag is not present, use highway type
+        """
 
         for u, v, k, data in self.G.edges(data=True, keys=True):
             if 'maxspeed' in data and type(data['maxspeed']) == str and data['maxspeed'].isdigit():
@@ -63,6 +66,13 @@ class RouteAnnotator():
                     data['maxspeed'] = speed
 
     def _build_lookups(self):
+        """
+        Loops through edges and connecting nodes build three lookup dictionaries:
+            - segment_lookup: return the way id given two nodes. It can return
+            ways even if provided nodes are not sequentially connected
+            - way_lookup: return way metadata given the way id
+            - node_lookup: return node metadata given the node id
+        """
         # build segment lookup
         segment_lookup = {}
         segment_lengths = {}
@@ -142,6 +152,22 @@ class RouteAnnotator():
         self.node_lookup_ = node_lookup
 
     def segment_lookup(self, node_id_list):
+        """
+        Get way id given pair of node ids.
+
+        Provided a sequence of node ids, segment_lookup will iterate over it
+        pair by pair and check the pair in the lookup table. Even though two
+        nodes are not directly connected in OSM, this function will return way_id
+        if both nodes belong to the way.
+
+        Parameters:
+        node_id_list (array[int]): node id list.
+
+        Returns:
+        nodes_lookup (array[int]): return ways connecting the nodes. Given
+        node_id_list = [1,2,3], segment_lookup will return a list of size 2
+        giving the ways that connect nodes [1,2] and [2,3] and so on.
+        """
         if(type(node_id_list) == int):
             return self.segment_lookup_[node_id_list[i]][node_id_list[i+1]]
         else:
@@ -153,6 +179,18 @@ class RouteAnnotator():
             return ways_id
 
     def way_lookup(self, way_id_list):
+        """
+        Get way metadata given way id
+
+        Provided a sequence of way ids, way_lookup will iterate over them
+        individually and return the way metadata of each in a dictionary
+
+        Parameters:
+        way_id_list (array[int]): way id list.
+
+        Returns:
+        ways_lookup (array[dict]): return ways' metadata in array
+        """
         if(type(way_id_list) == int):
             return self.way_lookup_[way_id_list]
         else:
@@ -162,6 +200,18 @@ class RouteAnnotator():
             return ways_lookup
 
     def node_lookup(self, node_id_list):
+        """
+        Get node_lookup metadata given node id
+
+        Provided a sequence of node ids, node_lookup will iterate over them
+        individually and return the node metadata of each in a dictionary
+
+        Parameters:
+        node_id_list (array[int]): node id list.
+
+        Returns:
+        nodes_lookup (array[dict]): return nodes' metadata in array
+        """
         if(type(node_id_list) == int):
             return self.node_lookup_[node_id_list]
         else:
