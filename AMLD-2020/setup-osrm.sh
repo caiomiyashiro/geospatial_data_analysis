@@ -2,6 +2,7 @@
 
 if [ ! -f "router/new-york-latest.osm.pbf" ]; then
   mkdir router
+  cp data/test_traffic.csv router/test_traffic.csv
   wget http://download.geofabrik.de/north-america/us/new-york-latest.osm.pbf -O router/new-york-latest.osm.pbf
 else
   echo "File exists!"
