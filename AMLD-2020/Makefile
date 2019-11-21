@@ -1,14 +1,20 @@
 setup:
-	docker build . -t amld_geo
-	docker run -p 8888:8888 -d --name workshop amld_geo 
+	# init osmr data
+	sh setup-osrm.sh
+up: 
+	docker-compose up --build
+
+down:
+	docker-compose down
 
 .PHONY: get-url
 get-url:
-	@docker logs workshop >& logs
+	@docker logs jupyter-image >& logs
 	@cat logs | grep "127." | sed -n 2p
 	@rm -rf logs
 
 clean:
-	docker stop workshop
-	docker rm workshop
-	docker rmi amld_geo
+	docker-compose down
+	docker rm jupyter-image
+	docker rm osrm/osrm-backend
+	rm new-york-latest.osm.pbf

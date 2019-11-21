@@ -16,9 +16,9 @@ RUN pip install -r requirements.txt
 
 COPY AMLD_2020.ipynb /amld_geo/AMLD_2020.ipynb
 
-COPY data/sample_100000.csv /amld_geo/data/sample_100000.csv
-COPY data/temp_routes_test.pickle /amld_geo/data/temp_routes_test.pickle
-COPY data/temp_routes_train.pickle /amld_geo/data/temp_routes_train.pickle
+#COPY data/sample_100000.csv /amld_geo/data/sample_100000.csv
+#COPY data/temp_routes_test.pickle /amld_geo/data/temp_routes_test.pickle
+#COPY data/temp_routes_train.pickle /amld_geo/data/temp_routes_train.pickle
 
 COPY images/ /amld_geo/images
 

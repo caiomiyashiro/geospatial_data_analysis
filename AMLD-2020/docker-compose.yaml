@@ -1,0 +1,34 @@
+version: '3.3'
+
+services:
+  osrm-router:
+    image: osrm/osrm-backend
+    command: osrm-routed --algorithm mld /data/new-york-latest.osm.pbf
+    restart: always
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/data
+    networks:
+      - osrm_network
+
+
+  jupyter:
+    image: 'jupyter-image'
+    build: '.'
+    environment:
+       - GRANT_SUDO=yes
+    user: root
+    ports:
+      - 8888:8888
+    tty: true
+    links:
+      - osrm-router
+    depends_on:
+      - osrm-router
+    networks:
+      - osrm_network
+
+networks:
+  osrm_network:
+    driver: bridge
