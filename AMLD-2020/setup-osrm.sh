@@ -4,6 +4,7 @@ if [ ! -f "router/new_york_city.osm.pbf" ]; then
   mkdir router
   echo "Downloading file router/new-york-latest.osm.pbf..."
   wget https://amldspatial.s3.eu-central-1.amazonaws.com/new_york_city.osm.pbf -O router/new_york_city.osm.pbf
+  cp router/new_york_city.osm.pbf data/new_york_city.osm.pbf
 else
   echo "File router/new-york-latest.osm.pbf exists!"
 fi

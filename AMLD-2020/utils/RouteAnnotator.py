@@ -1,6 +1,7 @@
 import osmnx as ox
 import numpy as np
 import networkx as nx
+import pickle
 from itertools import combinations
 
 class RouteAnnotator():
@@ -12,6 +13,8 @@ class RouteAnnotator():
         self.way_lookup_ = None
         self.node_lookup_ = None
         self.G = None
+        self.place = place
+        self.network_type = network_type
 
         self.HIGHWAY_SPEED_LIMITS ={   # copied from https://github.com/Project-OSRM/osrm-backend/blob/master/profiles/car.lua
             'motorway':90,
@@ -40,7 +43,9 @@ class RouteAnnotator():
             'elevator': 0.2  #
         }
 
-        self.G = ox.graph_from_place(place, network_type=network_type, simplify=False) # example - 'new york, usa'
+    def build_lookups(self):
+        # example - 'new york, usa'
+        self.G = ox.graph_from_place(self.place, network_type=self.network_type, simplify=False)
         self.add_speeds()
         self._build_lookups()
 
@@ -218,3 +223,27 @@ class RouteAnnotator():
             for node in node_id_list:
                 nodes_lookup.append(self.node_lookup_[node])
             return nodes_lookup
+
+    @staticmethod
+    def AMLD_local_lookups(place, network_type='drive_service'):
+        """
+        Build RouteAnnotator and load local lookup dictionaries
+
+        OSMnx download the whole city network before processing and this
+        takes a lot of memory. For the AMLD presentation, we load already saved
+        dictionaries as downloading the network was breaking Docker container
+
+        Parameters:
+        place (str): place to be inverse geocoded by nominatin in OSMnx
+        network_type (str): type of network. Check OSMnx
+
+        Returns:
+        ra (RouteAnnotator): object with loaded lookups
+        """
+        ra = RouteAnnotator(place, network_type)
+        with open('data/AMLD_lookups.pickle', 'rb') as f:
+            node_lookup_, segment_lookup_, way_lookup_ = pickle.load(f)
+        ra.node_lookup_ = node_lookup_
+        ra.segment_lookup_ = segment_lookup_
+        ra.way_lookup_ = way_lookup_
+        return ra

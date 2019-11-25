@@ -22,7 +22,7 @@ Participants will be able to learn:
 - make sure you have `make` build system
   - Linux and Mac should have it by default
   - Windows - Check [installer](http://gnuwin32.sourceforge.net/packages/make.htm)
-- make sure you have `docker`
+- make sure you have `docker` with **minimum 2Gb allocated to containers**. Check [here](https://stackoverflow.com/questions/44533319/how-to-assign-more-memory-to-docker-container) for an example.
 ---
 
 ### Setup
@@ -34,3 +34,18 @@ Participants will be able to learn:
 
 4. copy and paste the link into your browser
 5. to uninstall everything, run `make clean`
+
+### Manual Setup
+1. Download following links into `data` folder:
+  - https://amldspatial.s3.eu-central-1.amazonaws.com/new_york_city.osm.pbf
+  - https://amldspatial.s3.eu-central-1.amazonaws.com/temp_routes_train.pickle
+  - https://amldspatial.s3.eu-central-1.amazonaws.com/temp_routes_test.pickle
+2. Copy `data/new_york_city.osm.pbf` to `router` folder:
+3. In your terminal at the root folder, execute the following commands:
+  - docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-extract -p /opt/car.lua /data/router/new_york_city.osm.pbf
+  - docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-partition /data/router/new_york_city.osm.pbf
+  - docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-customize /data/router/new_york_city.osm.pbf
+4. In your terminal, execute `docker-compose up --build`
+5. At the end of the process, you'll see a link similar (not equal) to the one below:
+`http://127.0.0.1:8888/?token=8a9ce1b6213dc455003b2ccdc79028a00b660b7666f9841b`. Copy and paste the link into your browser
+6. After executing the project, close it by executing `docker-compose down`
