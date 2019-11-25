@@ -11,4 +11,4 @@ clean:
 	docker-compose down
 	docker rm jupyter-image
 	docker rm osrm/osrm-backend
-	rm new-york-latest.osm.pbf
+	rm -r router/

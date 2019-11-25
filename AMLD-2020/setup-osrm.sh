@@ -1,12 +1,27 @@
 #!/env/sh
 
-if [ ! -f "router/new-york-latest.osm.pbf" ]; then
+if [ ! -f "router/new_york_city.osm.pbf" ]; then
   mkdir router
-  cp data/test_traffic.csv router/test_traffic.csv
-  wget http://download.geofabrik.de/north-america/us/new-york-latest.osm.pbf -O router/new-york-latest.osm.pbf
+  echo "Downloading file router/new-york-latest.osm.pbf..."
+  wget https://amldspatial.s3.eu-central-1.amazonaws.com/new_york_city.osm.pbf -O router/new_york_city.osm.pbf
 else
-  echo "File exists!"
+  echo "File router/new-york-latest.osm.pbf exists!"
 fi
-docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-extract -p /opt/car.lua /data/router/new-york-latest.osm.pbf
-docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-partition /data/router/new-york-latest.osm.pbf
-docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-customize /data/router/new-york-latest.osm.pbf
+
+if [ ! -f "data/temp_routes_train.pickle" ]; then
+  echo "Downloading file data/temp_routes_train.pickle..."
+  wget https://amldspatial.s3.eu-central-1.amazonaws.com/temp_routes_train.pickle -O data/temp_routes_train.pickle
+else
+  echo "File data/temp_routes_train.pickle exists!"
+fi
+
+if [ ! -f "data/temp_routes_test.pickle" ]; then
+  echo "Downloading file data/temp_routes_test.pickle..."
+  wget https://amldspatial.s3.eu-central-1.amazonaws.com/temp_routes_test.pickle -O data/temp_routes_test.pickle
+else
+  echo "File data/temp_routes_test.pickle exists!"
+fi
+
+docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-extract -p /opt/car.lua /data/router/new_york_city.osm.pbf
+docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-partition /data/router/new_york_city.osm.pbf
+docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-customize /data/router/new_york_city.osm.pbf

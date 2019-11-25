@@ -3,7 +3,7 @@ version: '3.3'
 services:
   osrm-router:
     image: osrm/osrm-backend
-    command: osrm-routed --algorithm mld /data/new-york-latest.osm.pbf
+    command: osrm-routed --algorithm mld /data/router/new_york_city.osm.pbf
     restart: always
     ports:
       - 5000:5000
