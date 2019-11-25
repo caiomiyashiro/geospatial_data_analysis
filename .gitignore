@@ -8,3 +8,4 @@ AMLD-2020/data/temp_routes_train.pickle
 AMLD-2020/data/temp_routes_test.pickle
 AMLD-2020/router/
 AMLD-2020/data/new_york_city.osm.pbf
+AMLD-2020/data/AMLD_lookups.pickle

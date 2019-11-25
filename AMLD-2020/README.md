@@ -33,7 +33,7 @@ Participants will be able to learn:
 `http://127.0.0.1:8888/?token=8a9ce1b6213dc455003b2ccdc79028a00b660b7666f9841b`  
 
 4. copy and paste the link into your browser
-5. to uninstall everything, run `make clean`
+5. to uninstall everything, run `make down`
 
 ### Manual Setup
 1. Download following links into `data` folder:
@@ -46,6 +46,6 @@ Participants will be able to learn:
   - docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-partition /data/router/new_york_city.osm.pbf
   - docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-customize /data/router/new_york_city.osm.pbf
 4. In your terminal, execute `docker-compose up --build`
-5. At the end of the process, you'll see a link similar (not equal) to the one below:
+5. At the end of step 4., you'll see a link similar (not equal) to the one below:
 `http://127.0.0.1:8888/?token=8a9ce1b6213dc455003b2ccdc79028a00b660b7666f9841b`. Copy and paste the link into your browser
 6. After executing the project, close it by executing `docker-compose down`

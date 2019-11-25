@@ -7,8 +7,5 @@ up:
 down:
 	docker-compose down
 
-clean:
+down:
 	docker-compose down
-	docker rm jupyter-image
-	docker rm osrm/osrm-backend
-	rm -r router/
