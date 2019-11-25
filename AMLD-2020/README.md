@@ -24,8 +24,15 @@ Participants will be able to learn:
   - Windows - Check [installer](http://gnuwin32.sourceforge.net/packages/make.htm)
 - make sure you have `docker` with **minimum 2Gb allocated to containers**. Check [here](https://stackoverflow.com/questions/44533319/how-to-assign-more-memory-to-docker-container) for an example.
 ---
+### Data Usage Licence and Download:
 
-### Setup
+Because we're using a dataset from [Kaggle](https://www.kaggle.com/), you have to agree to it's terms of conditions in the [New York Taxi Fare Prediction Challenge](https://www.kaggle.com/c/new-york-city-taxi-fare-prediction).
+1. Make an account at Kaggle platform and log in
+2. Access the New York Taxi Fare Prediction Challenge and click "Late Submission"
+3. Accept the terms of condition
+4. Access [this link](https://www.kaggle.com/caiomiyashiro/ny-taxi-fare-sample-100000/download) while logged in to download the dataset and put it in the `data/` inside this project repository
+
+### Workshop Setup
 1. in your terminal, from the AMLD project folder, run: `make setup`
 2. after it's done, run `make up`
 3. at the end of the process, you'll see a link similar (not equal) to the one below
