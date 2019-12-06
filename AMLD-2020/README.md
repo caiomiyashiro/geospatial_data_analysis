@@ -19,7 +19,7 @@ Participants will be able to learn:
 
 ---
 ## Execution Requirements
-- make sure you have `make` build system
+- make sure you have `make` build system and `wget` file download command
   - Linux and Mac should have it by default
   - Windows - Check [installer](http://gnuwin32.sourceforge.net/packages/make.htm)
 - make sure you have `docker` with **minimum 2Gb allocated to containers**. Check [here](https://stackoverflow.com/questions/44533319/how-to-assign-more-memory-to-docker-container) for an example.
@@ -33,6 +33,9 @@ Because we're using a dataset from [Kaggle](https://www.kaggle.com/), you have t
 4. Access [this link](https://www.kaggle.com/caiomiyashiro/ny-taxi-fare-sample-100000/download) while logged in to download the dataset and put it in the `data/` inside this project repository
 
 ### Workshop Setup
+
+#### OPTION 1 - Automatic Setup  
+
 1. in your terminal, from the AMLD project folder, run: `make setup`
 2. after it's done, run `make up`
 3. at the end of the process, you'll see a link similar (not equal) to the one below
@@ -42,11 +45,12 @@ Because we're using a dataset from [Kaggle](https://www.kaggle.com/), you have t
 4. copy and paste the link into your browser
 5. to uninstall everything, run `make down`
 
-### Manual Setup
+#### OPTION 2 - Manual Setup
 1. Download following links into `data` folder:
   - https://amldspatial.s3.eu-central-1.amazonaws.com/new_york_city.osm.pbf
   - https://amldspatial.s3.eu-central-1.amazonaws.com/temp_routes_train.pickle
   - https://amldspatial.s3.eu-central-1.amazonaws.com/temp_routes_test.pickle
+  - https://amldspatial.s3.eu-central-1.amazonaws.com/AMLD_lookups.pickle
 2. Copy `data/new_york_city.osm.pbf` to `router` folder:
 3. In your terminal at the root folder, execute the following commands:
   - docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-extract -p /opt/car.lua /data/router/new_york_city.osm.pbf
