@@ -7,7 +7,7 @@ Duration of the workshop - 1 Day
 ## Workshop summary
 In this workshop, participants will be able to understand what are the types of data processing they can do in order to extract better knowledge out of their spatial data. We will introduce tools for visualizing, extracting features and feature engineering and explain the logic and steps needed in order to create them. The techniques will be presented in the context of a simple machine learning model for predicting taxi tariffs and illustrate how we can improve it with these new features.
 
-Participants will be able to learnns:
+Participants will be able to learn:
 
 - Visualise spatial data for exploratory data analysis
 - Understand and calculate distances
