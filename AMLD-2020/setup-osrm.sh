@@ -23,7 +23,7 @@ else
   echo "File data/temp_routes_test.pickle exists!"
 fi
 
-if [ ! -f "data/temp_routes_test.pickle" ]; then
+if [ ! -f "data/AMLD_lookups.pickle" ]; then
   echo "Downloading file data/AMLD_lookups.pickle..."
   wget https://amldspatial.s3.eu-central-1.amazonaws.com/AMLD_lookups.pickle -O data/AMLD_lookups.pickle
 else
