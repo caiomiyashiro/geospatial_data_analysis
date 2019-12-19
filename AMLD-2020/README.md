@@ -21,7 +21,7 @@ Participants will be able to learn:
 ## Execution Requirements
 - make sure you have `make` build system and `wget` file download command
   - Linux and Mac should have it by default
-  - Windows - Check [installer](http://gnuwin32.sourceforge.net/packages/make.htm)
+  - Windows - Check [installer](http://gnuwin32.sourceforge.net/packages/make.htm). If you can't install these tools in your machine, please go through the `Manual Setup`.
 - make sure you have `docker` with **minimum 2Gb allocated to containers**. Check [here](https://stackoverflow.com/questions/44533319/how-to-assign-more-memory-to-docker-container) for an example.
 ---
 ### Data Usage Licence and Download:
