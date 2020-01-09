@@ -9,7 +9,8 @@ COPY requirements.txt /amld_geo/.
 
 RUN pip install --upgrade pip && pip install  -r requirements.txt
 
-COPY AMLD_2020.ipynb /amld_geo/AMLD_2020.ipynb 
+COPY Complete_AMLD_2020.ipynb \
+     Presentation_AMLD_2020.ipynb /amld_geo/
 
 COPY data/taxi_fare_sample_100000.csv \
      data/temp_routes_test.pickle \
