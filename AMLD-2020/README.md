@@ -22,7 +22,7 @@ Participants will be able to learn:
 - make sure you have `make` build system and `wget` file download command
   - Linux and Mac should have it by default
   - Windows - Check [installer](http://gnuwin32.sourceforge.net/packages/make.htm). If you can't install these tools in your machine, please go through the `Manual Setup`.
-- make sure you have `docker` with **minimum 2Gb allocated to containers**. Check [here](https://stackoverflow.com/questions/44533319/how-to-assign-more-memory-to-docker-container) for an example.
+- make sure you have `docker` with **minimum 2Gb allocated to containers**. Check [here](https://stackoverflow.com/questions/44533319/how-to-assign-more-memory-to-docker-container) for an example. Some linux users might also have to separately install docker-compose as well. See [here](https://stackoverflow.com/questions/36685980/docker-is-installed-but-docker-compose-is-not-why)
 ---
 ### Data Usage Licence and Download:
 
@@ -43,7 +43,7 @@ Because we're using a dataset from [Kaggle](https://www.kaggle.com/), you have t
 `http://127.0.0.1:8888/?token=8a9ce1b6213dc455003b2ccdc79028a00b660b7666f9841b`  
 
 4. copy and paste the link into your browser
-5. to uninstall everything, run `make down`
+5. to uninstall everything (after the workshop), run `make down`
 
 #### OPTION 2 - Manual Setup
 1. Download following links into `data` folder:
