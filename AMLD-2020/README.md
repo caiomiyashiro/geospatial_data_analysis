@@ -52,11 +52,11 @@ Because we're using a dataset from [Kaggle](https://www.kaggle.com/), you have t
   - https://amldspatial.s3.eu-central-1.amazonaws.com/temp_routes_test.pickle
   - https://amldspatial.s3.eu-central-1.amazonaws.com/AMLD_lookups.pickle
 2. Create a `router` folder in the folder `AMLD-2020` and copy `data/new_york_city.osm.pbf` to it.
-3. In your terminal at the root folder, execute the following commands:
+3. In your terminal at the root folder (`AMLD-2020`), execute the following commands:
   - docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-extract -p /opt/car.lua /data/router/new_york_city.osm.pbf
   - docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-partition /data/router/new_york_city.osm.pbf
   - docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-customize /data/router/new_york_city.osm.pbf
-4. In your terminal, execute `docker-compose up --build`
+4. In your terminal, at the root folder (`AMLD-2020`), execute `docker-compose up --build`
 5. At the end of step 4., you'll see a link similar (not equal) to the one below:
 `http://127.0.0.1:8888/?token=8a9ce1b6213dc455003b2ccdc79028a00b660b7666f9841b`. Copy and paste the link into your browser
 6. After executing the project, close it by executing `docker-compose down`
