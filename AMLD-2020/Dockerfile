@@ -14,7 +14,6 @@ COPY Complete_AMLD_2020.ipynb \
 
 COPY data/taxi_fare_sample_100000.csv \
      data/temp_routes_test.pickle \
-     data/temp_routes_test.pickle \
      data/temp_routes_train.pickle \
      data/new_york_city.osm.pbf \
      data/AMLD_lookups.pickle /amld_geo/data/
