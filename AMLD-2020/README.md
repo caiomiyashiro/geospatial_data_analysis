@@ -36,7 +36,7 @@ Because we're using a dataset from [Kaggle](https://www.kaggle.com/), you have t
 
 #### OPTION 1 - Automatic Setup  
 
-1. in your terminal, from the AMLD project folder (`AMLD2-2020`), run: `make setup`
+1. in your terminal, from the AMLD project folder (`AMLD-2020`), run: `make setup`
 2. after it's done, run `make up`
 3. at the end of the process, you'll see a link similar (not equal) to the one below
 
