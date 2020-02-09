@@ -9,6 +9,31 @@ class OSRMFramework():
     def __init__(self, OSRM_server_path):
         self.server_url = OSRM_server_path
 
+    def nearest(self, lat, lon):
+        SERVICE = 'nearest'
+        optionals = {'number': 1, 'bearings':'0,2'}
+        coord = f'{lon},{lat}'
+
+        optionals_str = '?'
+        for k, v in optionals.items():
+            optionals_str += f'{k}={v}&'
+        optionals = optionals_str[:-1]
+
+        query = f'http://{self.server_url}/{SERVICE}/v1/driving/{coord}{optionals}'
+        print(f'query: {query}')
+        response = requests.get(query).json()
+
+        if(response['code'] == 'Ok'):
+            waypoint = response['waypoints'][0]
+            lon_node, lat_node = waypoint['location']
+            name_node = waypoint['name']
+            id_node = waypoint['nodes'][1]
+
+            return id_node, lat_node, lon_node, name_node
+        else:
+            return np.nan, np.nan, np.nan, np.nan
+
+
     def route(self, lat1, lon1, lat2, lon2, max_n_routes=1):
         """
         Get route calculated by OSRM between two points
