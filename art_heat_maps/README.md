@@ -28,10 +28,9 @@ Some briefly touched techniques:
 ## Workshop Setup
 
 1. in your terminal, from the `art_heat_maps`, run: `make setup`
-2. after it's done, run `make up`
-3. at the end of the process, you'll see a link similar (not equal) to the one below
+2. at the end of the process, type `make get-url`. You'll see a link similar (not equal) to the one below
 
 `http://127.0.0.1:8888/?token=8a9ce1b6213dc455003b2ccdc79028a00b660b7666f9841b`  
 
-4. copy and paste the link into your browser
-5. to uninstall everything (after the workshop), run `make down`
+3. copy and paste the link into your browser and you'll have access to the notebook.
+4. to uninstall everything (after the workshop), run `make clean`
