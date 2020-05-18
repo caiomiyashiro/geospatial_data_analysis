@@ -22,5 +22,16 @@ Some briefly touched techniques:
 - make sure you have `make` build system  
   - Linux and Mac should have it by default  
   - Windows - Check [installer](http://gnuwin32.sourceforge.net/packages/make.htm). Windows users usually have some more difficulties (sorry!). In any case, check dockerfile for installed python packages and extra utilitaries.  
-- make sure you have `docker` with **minimum 4Gb allocated to containers**. Check [here](https://stackoverflow.com/questions/44533319/how-to-assign-more-memory-to-docker-container) for an example.
----
+- make sure you have `docker` with **minimum 4Gb allocated to containers**. Check [here](https://stackoverflow.com/questions/44533319/how-to-assign-more-memory-to-docker-container) for an example.  
+---  
+
+## Workshop Setup
+
+1. in your terminal, from the `art_heat_maps`, run: `make setup`
+2. after it's done, run `make up`
+3. at the end of the process, you'll see a link similar (not equal) to the one below
+
+`http://127.0.0.1:8888/?token=8a9ce1b6213dc455003b2ccdc79028a00b660b7666f9841b`  
+
+4. copy and paste the link into your browser
+5. to uninstall everything (after the workshop), run `make down`
