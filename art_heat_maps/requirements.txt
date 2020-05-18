@@ -1,0 +1,10 @@
+osmnx==0.12.1
+geopandas==0.7.0
+osmium==3.0.0
+pandas==1.0.3
+numpy==1.18.4
+Shapely==1.7.0
+Pillow==7.1.2
+matplotlib==3.2.1
+jupyter==1.0.0
+keplergl==0.1.2
