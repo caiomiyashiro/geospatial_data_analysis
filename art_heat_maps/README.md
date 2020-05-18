@@ -1,8 +1,8 @@
 # Creating your own stylised maps with Python
 
-Link: [https://www.meetup.com/en-AU/PyBerlin/events/270339471/](https://www.meetup.com/en-AU/PyBerlin/events/270339471/)
+Link: [https://www.meetup.com/en-AU/PyBerlin/events/270339471/](https://www.meetup.com/en-AU/PyBerlin/events/270339471/)  
 
-Duration of the workshop - 1 Day
+Slides: [https://docs.google.com/presentation/d/1xlHcy__2pKnFw9hg6betR5WrlMQQ7VU_GCuIDN6gopQ/edit#slide=id.p](https://docs.google.com/presentation/d/1xlHcy__2pKnFw9hg6betR5WrlMQQ7VU_GCuIDN6gopQ/edit#slide=id.p)  
 
 ## Talk summary
 Let's take an overview of some common daily data processing on geospatial data and
