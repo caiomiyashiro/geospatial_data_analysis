@@ -1,3 +1,4 @@
+*.DS_store
 AMLD-2020 support files/
 AMLD-2020/data/temp_routes_test.pickle
 AMLD-2020/data/temp_routes_train.pickle
