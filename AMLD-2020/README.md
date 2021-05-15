@@ -2,6 +2,8 @@
 
 Link: [https://appliedmldays.org/workshops/feature-engineering-for-spatial-data-analysis](https://appliedmldays.org/workshops/feature-engineering-for-spatial-data-analysis)
 
+<img src="images/EPFL_Screen_AMLD.jpeg" alt="drawing"/>
+
 Duration of the workshop - 1 Day
 
 ## Workshop summary
