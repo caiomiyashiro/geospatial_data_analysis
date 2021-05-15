@@ -1,8 +1,8 @@
 # Feature Engineering for Spatial Data Analysis in the Context of Fare Prediction
 
-Link: [https://appliedmldays.org/workshops/feature-engineering-for-spatial-data-analysis](https://appliedmldays.org/workshops/feature-engineering-for-spatial-data-analysis)
+Link: [https://appliedmldays.org/events/amld-epfl-2020/workshops/feature-engineering-for-spatial-data-analysis](https://appliedmldays.org/events/amld-epfl-2020/workshops/feature-engineering-for-spatial-data-analysis)
 
-<img src="images/EPFL_Screen_AMLD.jpeg" alt="drawing"/>
+<img src="images/amld_cover.png" alt="drawing"/>
 
 Duration of the workshop - 1 Day
 
