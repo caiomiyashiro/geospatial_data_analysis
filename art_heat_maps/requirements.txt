@@ -4,7 +4,7 @@ osmium==3.0.0
 pandas==1.0.3
 numpy==1.18.4
 Shapely==1.7.0
-Pillow==8.1.2
+Pillow==8.2.0
 matplotlib==3.2.1
 jupyter==1.0.0
 keplergl==0.1.2
